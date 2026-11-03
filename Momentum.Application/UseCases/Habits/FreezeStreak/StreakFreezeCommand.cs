@@ -1,0 +1,11 @@
+﻿using MediatR;
+using Momentum.Application.Common;
+using Momentum.Application.DTOs;
+
+namespace Momentum.Application.UseCases.Habits.FreezeStreak;
+
+public sealed record StreakFreezeCommand(
+    int HabitId,
+    DateOnly FreezeDate,
+    string? Reason
+) : IRequest<Result<StreakFreezeDto>>;

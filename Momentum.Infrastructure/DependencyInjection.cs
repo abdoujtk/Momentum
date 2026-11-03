@@ -24,6 +24,7 @@ public static class DependencyInjection
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IMoodRepository, MoodRepository>();
+        services.AddScoped<IStreakFreezeRepository, StreakFreezeRepository>();
 
 
         return services;

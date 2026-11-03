@@ -1,6 +1,9 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Momentum.Application.Common.Behaviors;
+using Momentum.Application.Interfaces;
+using Momentum.Application.Services;
+
 
 namespace Momentum.Application;
 
@@ -15,6 +18,9 @@ public static class DependencyInjection
         });
 
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+
+        services.AddScoped<IFreezeQuotaService, FreezeQuotaService>();
+
 
         return services;
     }

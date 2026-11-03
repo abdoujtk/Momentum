@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Momentum.Application.DTOs;
 using Momentum.Application.UseCases.Habits.CheckIn;
 using Momentum.Application.UseCases.Habits.CreateHabit;
+using Momentum.Application.UseCases.Habits.FreezeStreak;
 using Momentum.Application.UseCases.Habits.GetHabits;
 
 namespace Momentum.Api.Controllers;
@@ -68,4 +69,23 @@ public async Task<IActionResult> CheckIn(
 
     return Ok(result.Value);
 }
+
+    [HttpPost("{habitId:int}/freeze")]
+    public async Task<IActionResult> Freeze(
+    int habitId,
+    [FromBody] StreakFreezeRequest request,
+    CancellationToken cancellationToken)
+    {
+        var command = new StreakFreezeCommand(
+            habitId,
+            request.FreezeDate,
+            request.Reason);
+
+        var result = await _mediator.Send(command, cancellationToken);
+
+        if (result.IsFailure)
+            return BadRequest(result.Error);
+
+        return Ok(result.Value);
+    }
 }
