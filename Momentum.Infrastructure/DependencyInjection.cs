@@ -22,6 +22,8 @@ public static class DependencyInjection
         services.AddScoped<ICheckInRepository, CheckInRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IMoodRepository, MoodRepository>();
 
 
         return services;

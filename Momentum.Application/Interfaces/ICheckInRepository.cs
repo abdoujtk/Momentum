@@ -9,4 +9,11 @@ public interface ICheckInRepository
         IEnumerable<int> habitIds,
         DateOnly date,
         CancellationToken cancellationToken = default);
+
+    Task<CheckIn?> GetByHabitIdAndDateAsync(
+    int habitId,
+    DateOnly date,
+    CancellationToken cancellationToken = default);
+
+    Task AddAsync(CheckIn checkIn, CancellationToken cancellationToken = default);
 }

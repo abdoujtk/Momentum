@@ -30,4 +30,7 @@ public class HabitRepository(MomentumDbContext db) : IHabitRepository
             .Include(h => h.Category)
             .FirstOrDefaultAsync(h => h.HabitId == habitId, cancellationToken);
     }
+
+    public async Task AddAsync(Habit habit, CancellationToken cancellationToken = default)
+    => await _db.Habits.AddAsync(habit, cancellationToken);
 }
