@@ -38,4 +38,18 @@ public class CheckInRepository(MomentumDbContext db) : ICheckInRepository
 
     public async Task AddAsync(CheckIn checkIn, CancellationToken cancellationToken = default)
         => await _db.CheckIns.AddAsync(checkIn, cancellationToken);
+
+    public async Task<List<CheckIn>> GetByUserHabitsInRangeAsync(
+    int userId,
+    DateOnly startDate,
+    DateOnly endDate,
+    CancellationToken cancellationToken = default)
+    {
+        return await _db.CheckIns
+            .AsNoTracking()
+            .Where(c => c.Habit.UserId == userId
+                     && c.CheckInDate >= startDate
+                     && c.CheckInDate <= endDate)
+            .ToListAsync(cancellationToken);
+    }
 }

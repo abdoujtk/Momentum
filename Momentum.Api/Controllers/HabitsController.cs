@@ -5,6 +5,7 @@ using Momentum.Application.UseCases.Habits.CheckIn;
 using Momentum.Application.UseCases.Habits.CreateHabit;
 using Momentum.Application.UseCases.Habits.FreezeStreak;
 using Momentum.Application.UseCases.Habits.GetHabits;
+using Momentum.Application.UseCases.Habits.GetHabitsHeatmap;
 
 namespace Momentum.Api.Controllers;
 
@@ -82,6 +83,21 @@ public async Task<IActionResult> CheckIn(
             request.Reason);
 
         var result = await _mediator.Send(command, cancellationToken);
+
+        if (result.IsFailure)
+            return BadRequest(result.Error);
+
+        return Ok(result.Value);
+    }
+
+    [HttpGet("heatmap")]
+    public async Task<IActionResult> GetHeatmap(
+        [FromQuery] int days = 90,
+        CancellationToken cancellationToken = default)
+    {
+        var result = await _mediator.Send(
+            new GetHabitsHeatmapQuery(days),
+            cancellationToken);
 
         if (result.IsFailure)
             return BadRequest(result.Error);

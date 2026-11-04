@@ -16,4 +16,10 @@ public interface IStreakFreezeRepository
         CancellationToken cancellationToken = default);
 
     Task AddAsync(StreakFreeze freeze, CancellationToken cancellationToken = default);
+
+    Task<List<StreakFreeze>> GetByUserHabitsInRangeAsync(
+    int userId,
+    DateOnly startDate,
+    DateOnly endDate,
+    CancellationToken cancellationToken = default);
 }

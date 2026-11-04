@@ -16,4 +16,10 @@ public interface ICheckInRepository
     CancellationToken cancellationToken = default);
 
     Task AddAsync(CheckIn checkIn, CancellationToken cancellationToken = default);
+
+        Task<List<CheckIn>> GetByUserHabitsInRangeAsync(
+    int userId,
+    DateOnly startDate,
+    DateOnly endDate,
+    CancellationToken cancellationToken = default);
 }
