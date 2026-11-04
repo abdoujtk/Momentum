@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Momentum.Application.DTOs;
 using Momentum.Application.UseCases.Habits.CheckIn;
 using Momentum.Application.UseCases.Habits.CreateHabit;
+using Momentum.Application.UseCases.Habits.DeleteHabit;
 using Momentum.Application.UseCases.Habits.FreezeStreak;
 using Momentum.Application.UseCases.Habits.GetHabits;
 using Momentum.Application.UseCases.Habits.GetHabitsHeatmap;
 using Momentum.Application.UseCases.Habits.GetHabitStreaks;
+using Momentum.Application.UseCases.Habits.UpdateHabit;
 
 namespace Momentum.Api.Controllers;
 
@@ -119,4 +121,40 @@ public async Task<IActionResult> CheckIn(
         return Ok(result.Value);
     }
 
+    [HttpPut("{habitId:int}")]
+    public async Task<IActionResult> Update(
+    int habitId,
+    [FromBody] UpdateHabitRequest request,
+    CancellationToken cancellationToken)
+    {
+        var command = new UpdateHabitCommand(
+            habitId,
+            request.Title, request.Description,
+            request.TargetValue, request.TargetUnit,
+            request.FrequencyType, request.DaysOfWeek,
+            request.ColorHex, request.IconName,
+            request.CategoryId);
+
+        var result = await _mediator.Send(command, cancellationToken);
+
+        if (result.IsFailure)
+            return BadRequest(result.Error);
+
+        return Ok(result.Value);
+    }
+
+    [HttpDelete("{habitId:int}")]
+    public async Task<IActionResult> Delete(
+        int habitId,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new DeleteHabitCommand(habitId),
+            cancellationToken);
+
+        if (result.IsFailure)
+            return BadRequest(result.Error);
+
+        return NoContent();   
+    }
 }

@@ -10,4 +10,6 @@ public interface IHabitRepository
     Task<Habit?> GetByIdAsync(int habitId, CancellationToken cancellationToken = default);
 
     Task AddAsync(Habit habit, CancellationToken cancellationToken = default);
+
+    Task<Habit?> GetByIdForUpdateAsync(int habitId, CancellationToken cancellationToken = default);
 }
