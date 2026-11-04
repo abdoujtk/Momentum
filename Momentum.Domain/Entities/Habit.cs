@@ -45,3 +45,23 @@ public partial class Habit
 
     public virtual User User { get; set; } = null!;
 }
+
+public partial class Habit
+{
+
+    public bool IsScheduledForDate(DateOnly date)
+    {
+        if (date < StartDate) return false;
+        if (EndDate.HasValue && date > EndDate.Value) return false;
+
+        if (FrequencyType == "Daily") return true;
+
+        if (FrequencyType == "SpecificDays" && !string.IsNullOrEmpty(DaysOfWeek))
+        {
+            var dow = (int)date.DayOfWeek;
+            return DaysOfWeek.Split(',').Select(int.Parse).Contains(dow);
+        }
+
+        return false;
+    }
+}

@@ -47,7 +47,7 @@ public class CheckInHandler : IRequestHandler<CheckInCommand, Result<CheckInDto>
 
         
         var today = _currentUser.Today;
-        if (!IsScheduledForDate(habit, today))
+        if (!habit.IsScheduledForDate( today))
             return Result<CheckInDto>.Failure(
                 Error.Validation("This habit is not scheduled for today."));
 

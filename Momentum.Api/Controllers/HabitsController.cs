@@ -6,6 +6,7 @@ using Momentum.Application.UseCases.Habits.CreateHabit;
 using Momentum.Application.UseCases.Habits.FreezeStreak;
 using Momentum.Application.UseCases.Habits.GetHabits;
 using Momentum.Application.UseCases.Habits.GetHabitsHeatmap;
+using Momentum.Application.UseCases.Habits.GetHabitStreaks;
 
 namespace Momentum.Api.Controllers;
 
@@ -104,4 +105,18 @@ public async Task<IActionResult> CheckIn(
 
         return Ok(result.Value);
     }
+
+    [HttpGet("streaks")]
+    public async Task<IActionResult> GetStreaks(CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new GetHabitStreaksQuery(),
+            cancellationToken);
+
+        if (result.IsFailure)
+            return BadRequest(result.Error);
+
+        return Ok(result.Value);
+    }
+
 }

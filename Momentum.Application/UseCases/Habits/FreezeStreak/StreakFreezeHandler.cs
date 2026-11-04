@@ -56,7 +56,7 @@ public class StreakFreezeHandler
                 Error.Validation("Freeze date cannot be before habit start date."));
 
 
-        if (!IsScheduledForDate(habit, request.FreezeDate))
+        if (!habit.IsScheduledForDate( request.FreezeDate))
             return Result<StreakFreezeDto>.Failure(
                 Error.Validation("This habit was not scheduled on the requested date."));
 
@@ -108,17 +108,5 @@ public class StreakFreezeHandler
             RemainingFreezesThisMonth: remaining));
     }
 
-    private static bool IsScheduledForDate(Habit habit, DateOnly date)
-    {
-        if (habit.FrequencyType == "Daily")
-            return true;
-
-        if (habit.FrequencyType == "SpecificDays" && !string.IsNullOrEmpty(habit.DaysOfWeek))
-        {
-            var dow = (int)date.DayOfWeek;
-            return habit.DaysOfWeek.Split(',').Select(int.Parse).Contains(dow);
-        }
-
-        return false;
-    }
+ 
 }

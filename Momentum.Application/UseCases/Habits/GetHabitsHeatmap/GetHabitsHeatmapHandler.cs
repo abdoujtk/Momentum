@@ -86,7 +86,7 @@ public class GetHabitsHeatmapHandler
 
         foreach (var habit in habits)
         {
-            if (!IsScheduledForDate(habit, date))
+            if (!habit.IsScheduledForDate(date))
                 continue;
 
             scheduled++;
@@ -112,9 +112,7 @@ public class GetHabitsHeatmapHandler
             Level: CalculateLevel(percent));
     }
 
-    /// <summary>
-    /// 0 = لا شيء، 1 = &lt;=25%, 2 = &lt;=50%, 3 = &lt;=75%, 4 = &gt;75%
-    /// </summary>
+   
     private static int CalculateLevel(decimal percent) => percent switch
     {
         0m => 0,
@@ -124,19 +122,5 @@ public class GetHabitsHeatmapHandler
         _ => 4
     };
 
-    private static bool IsScheduledForDate(Habit habit, DateOnly date)
-    {
-        if (date < habit.StartDate) return false;
-        if (habit.EndDate.HasValue && date > habit.EndDate.Value) return false;
 
-        if (habit.FrequencyType == "Daily") return true;
-
-        if (habit.FrequencyType == "SpecificDays" && !string.IsNullOrEmpty(habit.DaysOfWeek))
-        {
-            var dow = (int)date.DayOfWeek;
-            return habit.DaysOfWeek.Split(',').Select(int.Parse).Contains(dow);
-        }
-
-        return false;
-    }
 }
