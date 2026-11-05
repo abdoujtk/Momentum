@@ -2,6 +2,12 @@
   <Folder Name="/src/">
     <Project Path="Momentum.Api/Momentum.Api.csproj" />
     <Project Path="Momentum.Application/Momentum.Application.csproj" />
+    <Project Path="Momentum.Contracts/Momentum.Contracts.csproj" Id="16dbb498-284b-460b-a313-860dbf4761b9" />
+    <Project Path="Momentum.Desktop.ViewModels/Momentum.Desktop.ViewModels.csproj" Id="f1114b24-cccd-424e-af40-f8f51b29583a" />
+    <Project Path="Momentum.Desktop/Momentum.Desktop.csproj" Id="785faf1a-b98c-49aa-9da1-1a2555d7a25e">
+      <Platform Project="x64" />
+      <Deploy />
+    </Project>
     <Project Path="Momentum.Domain/Momentum.Domain.csproj" />
     <Project Path="Momentum.Infrastructure/Momentum.Infrastructure.csproj" />
   </Folder>

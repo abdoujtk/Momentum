@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Momentum.Desktop (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Momentum.Desktop (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
