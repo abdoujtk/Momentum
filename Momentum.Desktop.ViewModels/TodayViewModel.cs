@@ -11,7 +11,10 @@ public sealed partial class TodayViewModel : ObservableObject
     private readonly IHabitApiClient _api;
     private bool _loaded;
 
-    public TodayViewModel(IHabitApiClient api) => _api = api;
+    public TodayViewModel(IHabitApiClient api)
+    {
+        _api = api;
+    }
 
     public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
 
@@ -27,7 +30,7 @@ public sealed partial class TodayViewModel : ObservableObject
     [RelayCommand]
     public async Task LoadAsync(CancellationToken ct = default)
     {
-        if (_loaded) return;   // ← مرة واحدة فقط
+        if (_loaded) return;   
         _loaded = true;
 
         IsLoading = true;
@@ -45,11 +48,11 @@ public sealed partial class TodayViewModel : ObservableObject
         catch (HttpRequestException ex)
         {
             ErrorMessage = $"تعذر الاتصال بالخادم: {ex.Message}";
-            _loaded = false;   // ← يسمح بإعادة المحاولة
+            _loaded = false;   
         }
         catch (TaskCanceledException)
         {
-            // المستخدم أغلق الصفحة — تجاهل
+            
         }
         finally
         {

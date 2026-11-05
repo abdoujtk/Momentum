@@ -1,12 +1,8 @@
 ﻿using Momentum.Contracts;
 using Momentum.Desktop.ViewModels.Abstractions;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Momentum.Desktop.Services;
+namespace Momentum.Client.Http;
 
 public sealed class HabitApiClient(HttpClient http) : IHabitApiClient
 {
