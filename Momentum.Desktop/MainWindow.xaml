@@ -2,19 +2,5 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <NavigationView x:Name="NavView"
-                    IsBackButtonVisible="Collapsed"
-                    IsSettingsVisible="False"
-                    PaneDisplayMode="LeftCompact"
-                    SelectionChanged="NavView_SelectionChanged">
-
-        <NavigationView.MenuItems>
-            <NavigationViewItem Content="اليوم"
-                                Tag="today"
-                                Icon="Calendar"
-                                IsSelected="True" />
-        </NavigationView.MenuItems>
-
-        <Frame x:Name="ContentFrame" />
-    </NavigationView>
+    <Frame x:Name="RootFrame" />
 </Window>

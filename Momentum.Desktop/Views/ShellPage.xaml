@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="Momentum.Desktop.Views.ShellPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:Momentum.Desktop.Views"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      xmlns:models="using:Momentum.Desktop.ViewModels.Models"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <NavigationView x:Name="NavView"
+                    IsBackButtonVisible="Collapsed"
+                    IsSettingsVisible="False"
+                    PaneDisplayMode="LeftCompact"
+                    SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=TwoWay}"
+                    MenuItemsSource="{x:Bind ViewModel.NavigationItems}">
+        
+        <NavigationView.MenuItemTemplate>
+            <DataTemplate x:DataType="models:NavigationItem">
+                <StackPanel Orientation="Horizontal"
+                            Spacing="12">
+                    <FontIcon Glyph="{x:Bind IconGlyph}" />
+                    <TextBlock Text="{x:Bind Title}" />
+                </StackPanel>
+            </DataTemplate>
+        </NavigationView.MenuItemTemplate>
+
+        <Frame x:Name="ContentFrame" />
+    </NavigationView>
+</Page>

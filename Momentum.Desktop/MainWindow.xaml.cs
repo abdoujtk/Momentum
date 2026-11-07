@@ -9,21 +9,7 @@ public sealed partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        ContentFrame.Navigate(typeof(TodayPage));
-    }
-
-    private void NavView_SelectionChanged(
-        NavigationView sender,
-        NavigationViewSelectionChangedEventArgs args)
-    {
-        if (args.SelectedItem is NavigationViewItem item && item.Tag is string tag)
-        {
-            switch (tag)
-            {
-                case "today":
-                    ContentFrame.Navigate(typeof(TodayPage));
-                    break;
-            }
-        }
+      
+        RootFrame.Navigate(typeof(ShellPage));
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using Momentum.Client.Http;
+using Momentum.Desktop.Services;
 using Momentum.Desktop.ViewModels;
 using Momentum.Desktop.ViewModels.Abstractions;
 using Momentum.Desktop.Views;
@@ -55,13 +56,14 @@ namespace Momentum.Desktop
                 });
 
                 // ─── Services ───
-               
+                services.AddSingleton<INavigationService, NavigationService>();
 
                 // ─── ViewModels (Transient) ───
                 services.AddTransient<TodayViewModel>();
-
+                services.AddTransient<ShellViewModel>();
                 // ─── Pages ───
                 services.AddTransient<TodayPage>();
+                services.AddTransient<ShellPage>();
             })
             .Build();
 
