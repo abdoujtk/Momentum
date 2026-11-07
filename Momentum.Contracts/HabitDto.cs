@@ -14,4 +14,6 @@ public sealed record HabitDto(
     string CategoryName,
     string CategoryColorHex,
     bool IsCompletedToday,
-    decimal? TodayActualValue);
+    decimal? TodayActualValue,
+    bool IsScheduledToday
+    );

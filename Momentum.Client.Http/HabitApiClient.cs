@@ -19,4 +19,11 @@ public sealed class HabitApiClient(HttpClient http) : IHabitApiClient
 
         return habits ?? new List<HabitDto>();
     }
+
+    public async Task<bool> CheckInAsync(int habitId, CancellationToken ct = default)
+    {
+        var body = new { isCompleted = true };
+        var response = await _http.PostAsJsonAsync($"api/habits/{habitId}/checkin", body, ct);
+        return response.IsSuccessStatusCode;
+    }
 }

@@ -66,4 +66,32 @@ public sealed partial class TodayViewModel : ObservableObject
         _loaded = false;
         await LoadAsync(ct);
     }
+
+    [RelayCommand(AllowConcurrentExecutions =true)]
+    private async Task CheckInAsync(HabitDto? habit)
+    {
+        if (habit is null || habit.IsCompletedToday) return;
+
+        var index = Habits.IndexOf(habit);
+        if (index == -1) return;
+
+        
+        var original = habit;
+        Habits[index] = habit with { IsCompletedToday = true, TodayActualValue = habit.TargetValue };
+
+        try
+        {
+            var success = await _api.CheckInAsync(habit.HabitId);
+            if (!success)
+            {
+                
+                Habits[index] = original;
+            }
+        }
+        catch (Exception)
+        { 
+           
+            Habits[index] = original;
+        }
+    }
 }

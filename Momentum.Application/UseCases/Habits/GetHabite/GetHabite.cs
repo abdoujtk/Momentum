@@ -37,11 +37,13 @@ public class GetHabitsHandler : IRequestHandler<GetHabitsQuery, Result<List<Habi
         if (habits.Count == 0)
             return Result<List<HabitDto>>.Success(new List<HabitDto>());
 
-        var habitIds = habits.Select(h => h.HabitId).ToList();
+        var ToDayHabits = habits.Where(h=> h.IsScheduledForDate(today) ).ToList();
+
+        var habitIds = ToDayHabits.Select(h => h.HabitId).ToList();
         var todayCheckIns = await _checkInRepository
             .GetByHabitIdsAndDateAsync(habitIds, today, cancellationToken);
 
-        var dtos = habits.Select(h =>
+        var dtos = ToDayHabits.Select(h =>
         {
             var checkIn = todayCheckIns.GetValueOrDefault(h.HabitId);
 

@@ -11,5 +11,6 @@ namespace Momentum.Desktop.ViewModels.Abstractions
     public interface IHabitApiClient
     {
         Task<IReadOnlyList<HabitDto>> GetHabitsAsync(CancellationToken ct = default);
+        Task<bool> CheckInAsync(int habitId, CancellationToken ct = default);
     }
 }
