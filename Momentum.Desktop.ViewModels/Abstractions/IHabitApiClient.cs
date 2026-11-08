@@ -17,8 +17,10 @@ namespace Momentum.Desktop.ViewModels.Abstractions
         Task<HeatmapDto?> GetHeatmapAsync(int days = 90, CancellationToken ct = default);
         Task<IReadOnlyList<HabitStreakDto>> GetStreaksAsync(CancellationToken ct = default);
 
-        // جديدة
+        
         Task<IReadOnlyList<HabitDto>> GetAllHabitsAsync(CancellationToken ct = default);
         Task<IReadOnlyList<CategoryDto>> GetCategoriesAsync(CancellationToken ct = default);
+
+        Task<bool> CreateHabitAsync(CreateHabitRequest request, CancellationToken ct = default);
     }
 }

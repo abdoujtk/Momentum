@@ -13,14 +13,26 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <StackPanel Grid.Row="0"
-                    Spacing="4">
-            <TextBlock Text="إدارة العادات"
-                       Style="{StaticResource TitleTextBlockStyle}" />
-            <TextBlock Text="قائمة بكل عاداتك"
-                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-        </StackPanel>
+        <!-- Header + Add Button -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
+            <StackPanel Grid.Column="0"
+                        Spacing="4">
+                <TextBlock Text="إدارة العادات"
+                           Style="{StaticResource TitleTextBlockStyle}" />
+                <TextBlock Text="قائمة بكل عاداتك"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+            </StackPanel>
+
+            <Button Grid.Column="1"
+                    Content="إضافة عادة جديدة"
+                    Style="{StaticResource AccentButtonStyle}"
+                    Click="AddHabitButton_Click" />
+        </Grid>
         <!-- Loading/Error -->
         <StackPanel Grid.Row="1"
                     Spacing="8">

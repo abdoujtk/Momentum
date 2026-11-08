@@ -51,4 +51,10 @@ public sealed class HabitApiClient(HttpClient http) : IHabitApiClient
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<List<CategoryDto>>(cancellationToken: ct) ?? new();
     }
+
+    public async Task<bool> CreateHabitAsync(CreateHabitRequest request, CancellationToken ct = default)
+    {
+        var response = await _http.PostAsJsonAsync("api/habits", request, ct);
+        return response.IsSuccessStatusCode;
+    }
 }

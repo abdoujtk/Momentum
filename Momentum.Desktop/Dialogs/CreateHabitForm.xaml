@@ -1,0 +1,39 @@
+<UserControl x:Class="Momentum.Desktop.Dialogs.CreateHabitForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:contracts="using:Momentum.Contracts.DTOs">
+
+    <ScrollViewer>
+        <StackPanel Spacing="16"
+                    Width="400">
+            <TextBox x:Name="TitleBox"
+                     Header="اسم العادة"
+                     PlaceholderText="مثال: قراءة 20 صفحة" />
+            <TextBox x:Name="DescBox"
+                     Header="الوصف (اختياري)"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     Height="80" />
+
+            <ComboBox x:Name="CategoryBox"
+                      Header="الفئة"
+                      DisplayMemberPath="Name"
+                      HorizontalAlignment="Stretch" />
+
+            <ComboBox x:Name="FrequencyBox"
+                      Header="التكرار"
+                      SelectionChanged="FrequencyBox_SelectionChanged"
+                      HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="يومي"
+                              Tag="Daily" />
+                <ComboBoxItem Content="أيام محددة"
+                              Tag="SpecificDays" />
+            </ComboBox>
+
+            <TextBox x:Name="DaysBox"
+                     Header="الأيام المحددة (0=الأحد .. 6=السبت)"
+                     PlaceholderText="مثال: 1,3,5"
+                     Visibility="Collapsed" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

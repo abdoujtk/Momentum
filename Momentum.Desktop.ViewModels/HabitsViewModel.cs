@@ -53,4 +53,23 @@ public sealed partial class HabitsViewModel : ObservableObject
     }
 
     partial void OnErrorMessageChanged(string? value) => OnPropertyChanged(nameof(HasError));
+
+
+    public async Task<bool> CreateHabitAsync(CreateHabitRequest request)
+    {
+        try
+        {
+            var success = await _api.CreateHabitAsync(request);
+            if (success)
+            {
+                _loaded = false;
+                await LoadAsync();
+            }
+            return success;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }

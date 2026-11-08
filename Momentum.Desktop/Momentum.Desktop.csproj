@@ -14,6 +14,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Dialogs\CreateHabitForm.xaml" />
     <None Remove="Views\HabitsPage.xaml" />
     <None Remove="Views\ShellPage.xaml" />
     <None Remove="Views\TodayPage.xaml" />
@@ -67,6 +68,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\TodayPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Dialogs\CreateHabitForm.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
