@@ -61,9 +61,11 @@ namespace Momentum.Desktop
                 // ─── ViewModels (Transient) ───
                 services.AddTransient<TodayViewModel>();
                 services.AddTransient<ShellViewModel>();
+                services.AddTransient<HabitsViewModel>();
                 // ─── Pages ───
                 services.AddTransient<TodayPage>();
                 services.AddTransient<ShellPage>();
+                services.AddTransient<HabitsPage>();
             })
             .Build();
 

@@ -19,11 +19,26 @@ public class HabitsController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
 
+   
+
     [HttpGet]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetToday(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new GetTodayHabitsQuery(),
+            cancellationToken);
+
+        if (result.IsFailure)
+            return BadRequest(result.Error);
+
+        return Ok(result.Value);
+    }
+
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new GetAllHabitsQuery(),
             cancellationToken);
 
         if (result.IsFailure)

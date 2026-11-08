@@ -16,7 +16,8 @@ public sealed class NavigationService : INavigationService
     private readonly Dictionary<Type, Type> _viewModelToPageMap = new()
     {
         { typeof(TodayViewModel), typeof(TodayPage) },
-        
+        { typeof(HabitsViewModel), typeof(HabitsPage) },
+
     };
 
     

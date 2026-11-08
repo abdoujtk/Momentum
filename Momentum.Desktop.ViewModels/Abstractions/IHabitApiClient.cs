@@ -13,5 +13,12 @@ namespace Momentum.Desktop.ViewModels.Abstractions
     {
         Task<IReadOnlyList<HabitDto>> GetHabitsAsync(CancellationToken ct = default);
         Task<bool> CheckInAsync(int habitId, CancellationToken ct = default);
+
+        Task<HeatmapDto?> GetHeatmapAsync(int days = 90, CancellationToken ct = default);
+        Task<IReadOnlyList<HabitStreakDto>> GetStreaksAsync(CancellationToken ct = default);
+
+        // جديدة
+        Task<IReadOnlyList<HabitDto>> GetAllHabitsAsync(CancellationToken ct = default);
+        Task<IReadOnlyList<CategoryDto>> GetCategoriesAsync(CancellationToken ct = default);
     }
 }

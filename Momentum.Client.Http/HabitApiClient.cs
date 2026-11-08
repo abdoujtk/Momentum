@@ -27,4 +27,28 @@ public sealed class HabitApiClient(HttpClient http) : IHabitApiClient
         var response = await _http.PostAsJsonAsync($"api/habits/{habitId}/checkin", body, ct);
         return response.IsSuccessStatusCode;
     }
+
+    public Task<HeatmapDto?> GetHeatmapAsync(int days = 90, CancellationToken ct = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IReadOnlyList<HabitStreakDto>> GetStreaksAsync(CancellationToken ct = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IReadOnlyList<HabitDto>> GetAllHabitsAsync(CancellationToken ct = default)
+    {
+        var response = await _http.GetAsync("api/habits/all", ct); // افترضنا أن المسار /all
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<List<HabitDto>>(cancellationToken: ct) ?? new();
+    }
+
+    public async Task<IReadOnlyList<CategoryDto>> GetCategoriesAsync(CancellationToken ct = default)
+    {
+        var response = await _http.GetAsync("api/categories", ct);
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<List<CategoryDto>>(cancellationToken: ct) ?? new();
+    }
 }

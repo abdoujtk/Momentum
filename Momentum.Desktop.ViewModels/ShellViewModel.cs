@@ -19,8 +19,9 @@ public sealed partial class ShellViewModel : ObservableObject
         _navigationService = navigationService;
 
         
-        NavigationItems.Add(new NavigationItem("اليوم", typeof(TodayViewModel), "\uE787")); 
-        
+        NavigationItems.Add(new NavigationItem("اليوم", typeof(TodayViewModel), "\uE787"));
+        NavigationItems.Add(new NavigationItem("العادات", typeof(HabitsViewModel), "\uE8FD"));
+
     }
 
     partial void OnSelectedItemChanged(NavigationItem? value)
