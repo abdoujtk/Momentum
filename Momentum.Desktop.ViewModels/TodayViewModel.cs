@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Momentum.Contracts;
+using Momentum.Contracts.DTOs;
 using Momentum.Desktop.ViewModels.Abstractions;
 
 namespace Momentum.Desktop.ViewModels;

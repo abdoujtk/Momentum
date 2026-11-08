@@ -1,4 +1,5 @@
 ﻿using Momentum.Contracts;
+using Momentum.Contracts.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Momentum.Application.Common;
-using Momentum.Application.DTOs;
+
+using Momentum.Contracts.DTOs;
 
 namespace Momentum.Application.UseCases.Habits.UpdateHabit;
 

@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Momentum.Contracts\Momentum.Contracts.csproj" />
     <ProjectReference Include="..\Momentum.Domain\Momentum.Domain.csproj" />
   </ItemGroup>
 

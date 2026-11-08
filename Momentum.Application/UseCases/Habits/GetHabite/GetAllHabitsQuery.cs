@@ -1,20 +1,21 @@
 ﻿using MediatR;
 using Momentum.Application.Common;
-using Momentum.Application.DTOs;
+
 using Momentum.Application.Interfaces;
+using Momentum.Contracts.DTOs;
 
 namespace Momentum.Application.UseCases.Habits.GetHabits;
 
-public sealed record GetHabitsQuery : IRequest<Result<List<HabitDto>>>;
+public sealed record GetAllHabitsQuery : IRequest<Result<List<HabitDto>>>;
 
 
-public class GetHabitsHandler : IRequestHandler<GetHabitsQuery, Result<List<HabitDto>>>
+public class GetAllHabitsHandler : IRequestHandler<GetAllHabitsQuery, Result<List<HabitDto>>>
 {
     private readonly IHabitRepository _habitRepository;
     private readonly ICheckInRepository _checkInRepository;
     private readonly ICurrentUserService _currentUser;
 
-    public GetHabitsHandler(
+    public GetAllHabitsHandler(
         IHabitRepository habitRepository,
         ICheckInRepository checkInRepository,
         ICurrentUserService currentUser)
@@ -25,7 +26,7 @@ public class GetHabitsHandler : IRequestHandler<GetHabitsQuery, Result<List<Habi
     }
 
     public async Task<Result<List<HabitDto>>> Handle(
-        GetHabitsQuery request,
+        GetAllHabitsQuery request,
         CancellationToken cancellationToken)
     {
         var userId = _currentUser.UserId;
@@ -37,13 +38,13 @@ public class GetHabitsHandler : IRequestHandler<GetHabitsQuery, Result<List<Habi
         if (habits.Count == 0)
             return Result<List<HabitDto>>.Success(new List<HabitDto>());
 
-        var ToDayHabits = habits.Where(h=> h.IsScheduledForDate(today) ).ToList();
+        
 
-        var habitIds = ToDayHabits.Select(h => h.HabitId).ToList();
+        var habitIds = habits.Select(h => h.HabitId).ToList();
         var todayCheckIns = await _checkInRepository
             .GetByHabitIdsAndDateAsync(habitIds, today, cancellationToken);
 
-        var dtos = ToDayHabits.Select(h =>
+        var dtos = habits.Select(h =>
         {
             var checkIn = todayCheckIns.GetValueOrDefault(h.HabitId);
 

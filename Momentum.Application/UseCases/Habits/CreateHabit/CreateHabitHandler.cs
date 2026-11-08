@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Momentum.Application.Common;
-using Momentum.Application.DTOs;
+
 using Momentum.Application.Interfaces;
+using Momentum.Contracts.DTOs;
 using Momentum.Domain.Entities;
 
 namespace Momentum.Application.UseCases.Habits.CreateHabit;

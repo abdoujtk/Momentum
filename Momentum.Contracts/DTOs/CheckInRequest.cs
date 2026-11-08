@@ -1,4 +1,4 @@
-﻿namespace Momentum.Application.DTOs;
+﻿namespace Momentum.Contracts.DTOs;
 
 public sealed record CheckInRequest(
     decimal? ActualValue,

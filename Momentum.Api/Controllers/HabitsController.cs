@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Momentum.Application.DTOs;
+
 using Momentum.Application.UseCases.Habits.CheckIn;
 using Momentum.Application.UseCases.Habits.CreateHabit;
 using Momentum.Application.UseCases.Habits.DeleteHabit;
@@ -9,6 +9,7 @@ using Momentum.Application.UseCases.Habits.GetHabits;
 using Momentum.Application.UseCases.Habits.GetHabitsHeatmap;
 using Momentum.Application.UseCases.Habits.GetHabitStreaks;
 using Momentum.Application.UseCases.Habits.UpdateHabit;
+using Momentum.Contracts.DTOs;
 
 namespace Momentum.Api.Controllers;
 
@@ -22,7 +23,7 @@ public class HabitsController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new GetHabitsQuery(),
+            new GetTodayHabitsQuery(),
             cancellationToken);
 
         if (result.IsFailure)

@@ -1,4 +1,5 @@
 ﻿using Momentum.Contracts;
+using Momentum.Contracts.DTOs;
 using Momentum.Desktop.ViewModels.Abstractions;
 using System.Net.Http.Json;
 
