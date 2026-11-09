@@ -5,6 +5,7 @@ using Momentum.Application.UseCases.Habits.CheckIn;
 using Momentum.Application.UseCases.Habits.CreateHabit;
 using Momentum.Application.UseCases.Habits.DeleteHabit;
 using Momentum.Application.UseCases.Habits.FreezeStreak;
+using Momentum.Application.UseCases.Habits.GetHabitDetails;
 using Momentum.Application.UseCases.Habits.GetHabits;
 using Momentum.Application.UseCases.Habits.GetHabitsHeatmap;
 using Momentum.Application.UseCases.Habits.GetHabitStreaks;
@@ -172,5 +173,14 @@ public async Task<IActionResult> CheckIn(
             return BadRequest(result.Error);
 
         return NoContent();   
+    }
+
+    [HttpGet("{habitId:int}/details")]
+    public async Task<IActionResult> GetDetails(
+    int habitId, [FromQuery] int historyDays = 30,
+    CancellationToken ct = default)
+    {
+        var result = await _mediator.Send(new GetHabitDetailsQuery(habitId, historyDays), ct);
+        return result.IsFailure ? BadRequest(result.Error) : Ok(result.Value);
     }
 }

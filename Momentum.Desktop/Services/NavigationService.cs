@@ -17,6 +17,7 @@ public sealed class NavigationService : INavigationService
     {
         { typeof(TodayViewModel), typeof(TodayPage) },
         { typeof(HabitsViewModel), typeof(HabitsPage) },
+         { typeof(HabitDetailsViewModel), typeof(HabitDetailsPage) }
 
     };
 
@@ -30,15 +31,15 @@ public sealed class NavigationService : INavigationService
     public void NavigateTo<TViewModel>(object? parameter = null) where TViewModel : class
         => NavigateTo(typeof(TViewModel), parameter);
 
+  
     public void NavigateTo(Type viewModelType, object? parameter = null)
     {
         if (_frame is null) throw new InvalidOperationException("NavigationService is not initialized.");
 
         if (_viewModelToPageMap.TryGetValue(viewModelType, out var pageType))
         {
-            
-            if (_frame.CurrentSourcePageType == pageType) return;
-
+            // Allow navigation if parameter is provided (e.g., different habit details)
+            if (_frame.CurrentSourcePageType == pageType && parameter is null) return;
             _frame.Navigate(pageType, parameter);
         }
     }

@@ -49,7 +49,9 @@
         <!-- List of all habits -->
         <ListView Grid.Row="2"
                   ItemsSource="{x:Bind ViewModel.Habits, Mode=OneWay}"
-                  SelectionMode="None">
+                  SelectionMode="None"
+                  IsItemClickEnabled="True"
+                  ItemClick="HabitsList_ItemClick">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="contracts:HabitDto">
                     <Grid Padding="12"

@@ -22,4 +22,7 @@ public interface ICheckInRepository
     DateOnly startDate,
     DateOnly endDate,
     CancellationToken cancellationToken = default);
+
+    Task<List<CheckIn>> GetByHabitIdInRangeAsync(
+    int habitId, DateOnly from, DateOnly to, CancellationToken ct = default);
 }

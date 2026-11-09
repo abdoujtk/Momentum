@@ -25,5 +25,7 @@ namespace Momentum.Desktop.ViewModels.Abstractions
         Task<bool> UpdateHabitAsync(int habitId, UpdateHabitRequest request, CancellationToken ct = default);
 
         Task<bool> DeleteHabitAsync(int habitId, CancellationToken ct = default);
+
+        Task<HabitDetailsDto?> GetHabitDetailsAsync(int habitId, CancellationToken ct = default);
     }
 }

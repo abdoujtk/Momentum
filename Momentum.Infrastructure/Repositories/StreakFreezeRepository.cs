@@ -53,4 +53,11 @@ public class StreakFreezeRepository : IStreakFreezeRepository
                      && f.FreezeDate <= endDate)
             .ToListAsync(cancellationToken);
     }
+    public async Task<List<StreakFreeze>> GetByHabitIdInRangeAsync(
+    int habitId, DateOnly from, DateOnly to, CancellationToken ct = default)
+    => await _db.StreakFreezes
+        .AsNoTracking()
+        .Where(f => f.HabitId == habitId && f.FreezeDate >= from && f.FreezeDate <= to)
+        .OrderByDescending(f => f.FreezeDate)
+        .ToListAsync(ct);
 }

@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Momentum.Contracts.DTOs;
 using Momentum.Desktop.Dialogs;
 using Momentum.Desktop.ViewModels;
+using Momentum.Desktop.ViewModels.Abstractions;
 using System;
 
 namespace Momentum.Desktop.Views;
@@ -112,6 +113,14 @@ public sealed partial class HabitsPage : Page
             };
             await errorDialog.ShowAsync();
         }
+    }
+
+    private void HabitsList_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        if (e.ClickedItem is not HabitDto habit) return;
+
+        var navService = App.GetService<INavigationService>();
+        navService.NavigateTo<HabitDetailsViewModel>(habit.HabitId);
     }
 
 }

@@ -52,4 +52,12 @@ public class CheckInRepository(MomentumDbContext db) : ICheckInRepository
                      && c.CheckInDate <= endDate)
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<List<CheckIn>> GetByHabitIdInRangeAsync(
+    int habitId, DateOnly from, DateOnly to, CancellationToken ct = default)
+    => await _db.CheckIns
+        .AsNoTracking()
+        .Where(c => c.HabitId == habitId && c.CheckInDate >= from && c.CheckInDate <= to)
+        .OrderByDescending(c => c.CheckInDate)
+        .ToListAsync(ct);
 }

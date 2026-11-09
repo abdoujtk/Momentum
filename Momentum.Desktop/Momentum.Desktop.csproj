@@ -14,6 +14,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Views\HabitDetailsPage.xaml" />
     <None Remove="Views\HabitsPage.xaml" />
     <None Remove="Views\ShellPage.xaml" />
     <None Remove="Views\TodayPage.xaml" />
@@ -54,6 +55,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Momentum.Client.Http\Momentum.Client.Http.csproj" />
     <ProjectReference Include="..\Momentum.Desktop.ViewModels\Momentum.Desktop.ViewModels.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\HabitDetailsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\HabitsPage.xaml">

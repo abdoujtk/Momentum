@@ -9,4 +9,4 @@ public sealed record StreakFreezeCommand(
     int HabitId,
     DateOnly FreezeDate,
     string? Reason
-) : IRequest<Result<StreakFreezeDto>>;
+) : IRequest<Result<StreakFreezeResultDto>>;

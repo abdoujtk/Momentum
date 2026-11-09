@@ -22,4 +22,7 @@ public interface IStreakFreezeRepository
     DateOnly startDate,
     DateOnly endDate,
     CancellationToken cancellationToken = default);
+
+    Task<List<StreakFreeze>> GetByHabitIdInRangeAsync(
+    int habitId, DateOnly from, DateOnly to, CancellationToken ct = default);
 }

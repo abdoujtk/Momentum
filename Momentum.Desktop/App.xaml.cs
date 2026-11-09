@@ -62,10 +62,12 @@ namespace Momentum.Desktop
                 services.AddTransient<TodayViewModel>();
                 services.AddTransient<ShellViewModel>();
                 services.AddTransient<HabitsViewModel>();
+                services.AddTransient<HabitDetailsViewModel>();
                 // ─── Pages ───
                 services.AddTransient<TodayPage>();
                 services.AddTransient<ShellPage>();
                 services.AddTransient<HabitsPage>();
+                services.AddTransient<HabitDetailsPage>();
             })
             .Build();
 

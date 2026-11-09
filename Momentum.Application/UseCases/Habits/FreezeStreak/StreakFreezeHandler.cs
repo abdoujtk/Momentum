@@ -8,7 +8,7 @@ using Momentum.Domain.Entities;
 namespace Momentum.Application.UseCases.Habits.FreezeStreak;
 
 public class StreakFreezeHandler
-    : IRequestHandler<StreakFreezeCommand, Result<StreakFreezeDto>>
+    : IRequestHandler<StreakFreezeCommand, Result<StreakFreezeResultDto>>
 {
     private readonly IHabitRepository _habitRepository;
     private readonly ICheckInRepository _checkInRepository;
@@ -33,57 +33,57 @@ public class StreakFreezeHandler
         _currentUser = currentUser;
     }
 
-    public async Task<Result<StreakFreezeDto>> Handle(
+    public async Task<Result<StreakFreezeResultDto>> Handle(
         StreakFreezeCommand request,
         CancellationToken cancellationToken)
     {
-        
+
         var habit = await _habitRepository.GetByIdAsync(request.HabitId, cancellationToken);
         if (habit is null)
-            return Result<StreakFreezeDto>.Failure(Error.NotFound("Habit"));
+            return Result<StreakFreezeResultDto>.Failure(Error.NotFound("Habit"));
 
-        
+
         if (habit.UserId != _currentUser.UserId)
-            return Result<StreakFreezeDto>.Failure(Error.Unauthorized());
+            return Result<StreakFreezeResultDto>.Failure(Error.Unauthorized());
 
-        
+
         if (habit.IsArchived)
-            return Result<StreakFreezeDto>.Failure(
+            return Result<StreakFreezeResultDto>.Failure(
                 Error.Validation("Cannot freeze an archived habit."));
 
-       
+
         if (request.FreezeDate < habit.StartDate)
-            return Result<StreakFreezeDto>.Failure(
+            return Result<StreakFreezeResultDto>.Failure(
                 Error.Validation("Freeze date cannot be before habit start date."));
 
 
-        if (!habit.IsScheduledForDate( request.FreezeDate))
-            return Result<StreakFreezeDto>.Failure(
+        if (!habit.IsScheduledForDate(request.FreezeDate))
+            return Result<StreakFreezeResultDto>.Failure(
                 Error.Validation("This habit was not scheduled on the requested date."));
 
-       
+
         var existingCheckIn = await _checkInRepository
             .GetByHabitIdAndDateAsync(habit.HabitId, request.FreezeDate, cancellationToken);
         if (existingCheckIn is not null)
-            return Result<StreakFreezeDto>.Failure(
+            return Result<StreakFreezeResultDto>.Failure(
                 Error.Validation("Cannot freeze a day that already has a check-in."));
 
 
         var alreadyFrozen = await _freezeRepository
             .ExistsAsync(habit.HabitId, request.FreezeDate, cancellationToken);
         if (alreadyFrozen)
-            return Result<StreakFreezeDto>.Failure(
+            return Result<StreakFreezeResultDto>.Failure(
                 Error.Validation("This day is already frozen."));
 
-       
+
         var canFreeze = await _quotaService
             .CanFreezeAsync(habit.HabitId, request.FreezeDate, cancellationToken);
         if (!canFreeze)
-            return Result<StreakFreezeDto>.Failure(
+            return Result<StreakFreezeResultDto>.Failure(
                 Error.Validation(
                     $"Monthly freeze quota reached ({_quotaService.MaxFreezesPerMonth} per habit)."));
 
-       
+
         var freeze = new StreakFreeze
         {
             HabitId = habit.HabitId,
@@ -101,13 +101,16 @@ public class StreakFreezeHandler
             cancellationToken);
         var remaining = Math.Max(0, _quotaService.MaxFreezesPerMonth - used);
 
-        return Result<StreakFreezeDto>.Success(new StreakFreezeDto(
+
+
+        return Result<StreakFreezeResultDto>.Success(new StreakFreezeResultDto(
             FreezeId: freeze.FreezeId,
             HabitId: freeze.HabitId,
             FreezeDate: freeze.FreezeDate,
             Reason: freeze.Reason,
-            RemainingFreezesThisMonth: remaining));
+            RemainingFreezesThisMonth: remaining
+           ));
     }
 
- 
+
 }
