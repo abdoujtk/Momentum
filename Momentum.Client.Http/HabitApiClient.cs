@@ -63,4 +63,9 @@ public sealed class HabitApiClient(HttpClient http) : IHabitApiClient
         var response = await _http.PutAsJsonAsync($"api/habits/{habitId}", request, ct);
         return response.IsSuccessStatusCode;
     }
+    public async Task<bool> DeleteHabitAsync(int habitId, CancellationToken ct = default)
+    {
+        var response = await _http.DeleteAsync($"api/habits/{habitId}", ct);
+        return response.IsSuccessStatusCode;  // 204 No Content
+    }
 }

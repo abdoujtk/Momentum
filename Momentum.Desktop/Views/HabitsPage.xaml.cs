@@ -79,5 +79,39 @@ public sealed partial class HabitsPage : Page
 
         await dialog.ShowAsync();
     }
+    private async void DeleteHabitButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button button || button.DataContext is not HabitDto habit)
+            return;
+
+       
+        var confirmDialog = new ContentDialog
+        {
+            XamlRoot = this.XamlRoot,
+            Title = "أرشفة العادة",
+            Content = $"هل أنت متأكد من أرشفة \"{habit.Title}\"؟\n\nلن تفقد السجلات، يمكنك استرجاعها لاحقًا.",
+            PrimaryButtonText = "أرشفة",
+            CloseButtonText = "إلغاء",
+            DefaultButton = ContentDialogButton.Close  
+        };
+
+        var result = await confirmDialog.ShowAsync();
+        if (result != ContentDialogResult.Primary) return;
+
+       
+        var success = await ViewModel.DeleteHabitAsync(habit);
+        if (!success)
+        {
+           
+            var errorDialog = new ContentDialog
+            {
+                XamlRoot = this.XamlRoot,
+                Title = "فشل الحذف",
+                Content = "تعذر الاتصال بالخادم. يرجى المحاولة مرة أخرى.",
+                CloseButtonText = "حسنًا"
+            };
+            await errorDialog.ShowAsync();
+        }
+    }
 
 }

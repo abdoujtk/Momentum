@@ -91,4 +91,28 @@ public sealed partial class HabitsViewModel : ObservableObject
         }
     }
 
+    public async Task<bool> DeleteHabitAsync(HabitDto habit)
+    {
+       
+        var index = Habits.IndexOf(habit);
+        if (index == -1) return false;
+        Habits.RemoveAt(index);
+
+        try
+        {
+            var success = await _api.DeleteHabitAsync(habit.HabitId);
+            if (!success)
+            {
+                
+                Habits.Insert(index, habit);
+                return false;
+            }
+            return true;
+        }
+        catch
+        {
+            Habits.Insert(index, habit);
+            return false;
+        }
+    }
 }
