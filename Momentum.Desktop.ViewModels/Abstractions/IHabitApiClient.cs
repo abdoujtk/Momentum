@@ -22,5 +22,6 @@ namespace Momentum.Desktop.ViewModels.Abstractions
         Task<IReadOnlyList<CategoryDto>> GetCategoriesAsync(CancellationToken ct = default);
 
         Task<bool> CreateHabitAsync(CreateHabitRequest request, CancellationToken ct = default);
+        Task<bool> UpdateHabitAsync(int habitId, UpdateHabitRequest request, CancellationToken ct = default);
     }
 }

@@ -72,4 +72,23 @@ public sealed partial class HabitsViewModel : ObservableObject
             return false;
         }
     }
+
+    public async Task<bool> UpdateHabitAsync(int habitId, UpdateHabitRequest request)
+    {
+        try
+        {
+            var success = await _api.UpdateHabitAsync(habitId, request);
+            if (success)
+            {
+                _loaded = false;
+                await LoadAsync();  
+            }
+            return success;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
 }

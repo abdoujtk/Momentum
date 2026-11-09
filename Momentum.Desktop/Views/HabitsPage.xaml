@@ -58,6 +58,7 @@
                             <ColumnDefinition Width="4" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <Rectangle Grid.Column="0"
@@ -78,6 +79,12 @@
                                    Text="{x:Bind FrequencyType}"
                                    VerticalAlignment="Center"
                                    Foreground="Gray" />
+
+                        <!-- زر التعديل -->
+                        <Button Grid.Column="3"
+                                Content="تعديل"
+                                Click="EditHabitButton_Click"
+                                VerticalAlignment="Center" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

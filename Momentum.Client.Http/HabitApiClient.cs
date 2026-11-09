@@ -57,4 +57,10 @@ public sealed class HabitApiClient(HttpClient http) : IHabitApiClient
         var response = await _http.PostAsJsonAsync("api/habits", request, ct);
         return response.IsSuccessStatusCode;
     }
+
+    public async Task<bool> UpdateHabitAsync(int habitId, UpdateHabitRequest request, CancellationToken ct = default)
+    {
+        var response = await _http.PutAsJsonAsync($"api/habits/{habitId}", request, ct);
+        return response.IsSuccessStatusCode;
+    }
 }
