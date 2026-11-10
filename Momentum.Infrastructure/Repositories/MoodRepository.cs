@@ -12,4 +12,9 @@ public class MoodRepository(MomentumDbContext db) : IMoodRepository
     public async Task<Mood?> GetByIdAsync(int moodId, CancellationToken cancellationToken = default)
         => await _db.Moods.AsNoTracking()
             .FirstOrDefaultAsync(m => m.MoodId == moodId, cancellationToken);
+    public async Task<List<Mood>> GetAllAsync(CancellationToken ct = default)
+       => await _db.Moods
+           .AsNoTracking()
+           .OrderByDescending(m => m.Score)
+           .ToListAsync(ct);
 }

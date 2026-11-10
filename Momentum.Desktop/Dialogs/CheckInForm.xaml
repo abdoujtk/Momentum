@@ -1,0 +1,34 @@
+<UserControl x:Class="Momentum.Desktop.Dialogs.CheckInForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ScrollViewer>
+        <StackPanel Spacing="16"
+                    Width="400">
+            <!-- Target info (readonly, shows user what they're aiming for) -->
+            <TextBlock x:Name="TargetInfoText"
+                       Style="{StaticResource BodyStrongTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                       TextWrapping="Wrap" />
+
+            <!-- Actual value (optional - pre-filled with target) -->
+            <TextBox x:Name="ActualValueBox"
+                     Header="القيمة الفعلية (اختياري)"
+                     PlaceholderText="اتركه فارغاً إذا حققت الهدف" />
+
+            <!-- Mood (optional) -->
+            <ComboBox x:Name="MoodBox"
+                      Header="كيف تشعر؟ (اختياري)"
+                      DisplayMemberPath="DisplayText"
+                      HorizontalAlignment="Stretch" />
+
+            <!-- Note (optional) -->
+            <TextBox x:Name="NoteBox"
+                     Header="ملاحظة (اختياري)"
+                     PlaceholderText="ما الذي يميز هذا اليوم؟"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     Height="80" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

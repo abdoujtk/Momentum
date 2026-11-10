@@ -75,4 +75,22 @@ public sealed class HabitApiClient(HttpClient http) : IHabitApiClient
         if (!response.IsSuccessStatusCode) return null;
         return await response.Content.ReadFromJsonAsync<HabitDetailsDto>(cancellationToken: ct);
     }
+
+    public async Task<bool> CheckInAsync(
+        int habitId, CheckInRequest request, CancellationToken ct = default)
+    {
+        var response = await _http.PostAsJsonAsync(
+            $"api/habits/{habitId}/checkin", request, ct);
+        return response.IsSuccessStatusCode;
+    }
+
+    
+    public async Task<IReadOnlyList<MoodDto>> GetMoodsAsync(CancellationToken ct = default)
+    {
+        var response = await _http.GetAsync("api/moods", ct);
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<List<MoodDto>>(
+            cancellationToken: ct) ?? new();
+    }
+
 }

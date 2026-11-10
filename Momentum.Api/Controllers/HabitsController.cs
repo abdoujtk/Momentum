@@ -20,7 +20,7 @@ public class HabitsController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
 
-   
+
 
     [HttpGet]
     public async Task<IActionResult> GetToday(CancellationToken cancellationToken)
@@ -69,27 +69,19 @@ public class HabitsController(IMediator mediator) : ControllerBase
     }
 
 
+    [HttpPost("{habitId:int}/checkin")]
+    public async Task<IActionResult> CheckIn(
+        int habitId,
+        [FromBody] CheckInRequest request,
+        CancellationToken ct)
+    {
+        var command = new CheckInCommand(
+            habitId, request.ActualValue, request.IsCompleted,
+            request.MoodId, request.Note);
 
-[HttpPost("{habitId:int}/checkin")]
-public async Task<IActionResult> CheckIn(
-    int habitId,
-    [FromBody] CheckInRequest request,
-    CancellationToken cancellationToken)
-{
-    var command = new CheckInCommand(
-        habitId,
-        request.ActualValue,
-        request.IsCompleted,
-        request.MoodId,
-        request.Note);
-
-    var result = await _mediator.Send(command, cancellationToken);
-
-    if (result.IsFailure)
-        return BadRequest(result.Error);
-
-    return Ok(result.Value);
-}
+        var result = await _mediator.Send(command, ct);
+        return result.IsFailure ? BadRequest(result.Error) : Ok(result.Value);
+    }
 
     [HttpPost("{habitId:int}/freeze")]
     public async Task<IActionResult> Freeze(
@@ -172,7 +164,7 @@ public async Task<IActionResult> CheckIn(
         if (result.IsFailure)
             return BadRequest(result.Error);
 
-        return NoContent();   
+        return NoContent();
     }
 
     [HttpGet("{habitId:int}/details")]
@@ -183,4 +175,6 @@ public async Task<IActionResult> CheckIn(
         var result = await _mediator.Send(new GetHabitDetailsQuery(habitId, historyDays), ct);
         return result.IsFailure ? BadRequest(result.Error) : Ok(result.Value);
     }
+
+
 }

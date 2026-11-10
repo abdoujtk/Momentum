@@ -14,6 +14,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Dialogs\CheckInForm.xaml" />
     <None Remove="Views\HabitDetailsPage.xaml" />
     <None Remove="Views\HabitsPage.xaml" />
     <None Remove="Views\ShellPage.xaml" />
@@ -55,6 +56,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Momentum.Client.Http\Momentum.Client.Http.csproj" />
     <ProjectReference Include="..\Momentum.Desktop.ViewModels\Momentum.Desktop.ViewModels.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Dialogs\CheckInForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\HabitDetailsPage.xaml">

@@ -62,8 +62,7 @@
                         </StackPanel>
 
                         <Button Grid.Column="2"
-                                Command="{Binding ElementName=RootPage, Path=ViewModel.CheckInCommand}"
-                                CommandParameter="{x:Bind}"
+                                Click="CheckInButton_Click"
                                 Content="إنجاز"
                                 Style="{StaticResource AccentButtonStyle}"
                                 Visibility="{x:Bind IsCompletedToday, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
