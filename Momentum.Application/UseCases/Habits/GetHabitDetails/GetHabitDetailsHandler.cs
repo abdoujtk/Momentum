@@ -49,13 +49,21 @@ public class GetHabitDetailsHandler
         var historyFrom = today.AddDays(-request.HistoryDays);
 
         var recentCheckIns = allCheckIns
-            .Where(c => c.CheckInDate >= historyFrom)
-            .OrderByDescending(c => c.CheckInDate)
-            .Select(c => new CheckInDto(
-                c.CheckInId, c.HabitId, c.CheckInDate,
-                c.ActualValue, c.IsCompleted, c.MoodId,
-                null, null, c.Note))
-            .ToList();
+    .Where(c => c.CheckInDate >= historyFrom)
+    .OrderByDescending(c => c.CheckInDate)
+    .Select(c => new CheckInDto(
+        CheckInId: c.CheckInId,
+        HabitId: c.HabitId,
+        CheckInDate: c.CheckInDate,
+        ActualValue: c.ActualValue,
+        TargetValue: habit.TargetValue,      // ← from habit
+        TargetUnit: habit.TargetUnit,        // ← from habit
+        IsCompleted: c.IsCompleted,
+        MoodId: c.MoodId,
+        MoodName: c.Mood?.Name,              // ← populated from Include
+        MoodEmoji: c.Mood?.Emoji,            // ← populated from Include
+        Note: c.Note))
+    .ToList();
 
         var recentFreezes = allFreezes
             .Where(f => f.FreezeDate >= historyFrom)

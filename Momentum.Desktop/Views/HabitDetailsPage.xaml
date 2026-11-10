@@ -123,26 +123,41 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
+                                    <!-- Completion icon -->
                                     <FontIcon Grid.Column="0"
                                               Glyph="{x:Bind IsCompleted, Converter={StaticResource BoolToCheckmarkConverter}}"
                                               Foreground="{x:Bind IsCompleted, Converter={StaticResource BoolToColorConverter}}"
                                               FontSize="16"
                                               VerticalAlignment="Center" />
 
+                                    <!-- Date + Mood + Note -->
                                     <StackPanel Grid.Column="1"
                                                 Spacing="2">
-                                        <TextBlock Text="{x:Bind CheckInDate}"
-                                                   Style="{StaticResource BodyTextBlockStyle}" />
+                                        <StackPanel Orientation="Horizontal"
+                                                    Spacing="8">
+                                            <TextBlock Text="{x:Bind CheckInDate}"
+                                                       Style="{StaticResource BodyTextBlockStyle}" />
+
+                                            <!-- Mood badge (only if present) -->
+                                            <TextBlock Text="{x:Bind DisplayMood}"
+                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                       Style="{StaticResource BodyTextBlockStyle}"
+                                                       Visibility="{x:Bind HasMood, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                        </StackPanel>
+
                                         <TextBlock Text="{x:Bind Note}"
                                                    Style="{StaticResource CaptionTextBlockStyle}"
                                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                   TextWrapping="Wrap"
                                                    Visibility="{x:Bind Note, Converter={StaticResource NullToVisibilityConverter}}" />
                                     </StackPanel>
 
+                                    <!-- Value with unit -->
                                     <TextBlock Grid.Column="2"
-                                               Text="{x:Bind ActualValue, FallbackValue=''}"
+                                               Text="{x:Bind DisplayValue}"
                                                VerticalAlignment="Center"
-                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                               FontFamily="Consolas" />
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

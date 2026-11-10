@@ -93,15 +93,17 @@ public class CheckInHandler : IRequestHandler<CheckInCommand, Result<CheckInDto>
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result<CheckInDto>.Success(new CheckInDto(
-            CheckInId: checkIn.CheckInId,
-            HabitId: checkIn.HabitId,
-            CheckInDate: checkIn.CheckInDate,
-            ActualValue: checkIn.ActualValue,
-            IsCompleted: checkIn.IsCompleted,
-            MoodId: checkIn.MoodId,
-            MoodName: mood?.Name,
-            MoodEmoji: mood?.Emoji,
-            Note: checkIn.Note));
+    CheckInId: checkIn.CheckInId,
+    HabitId: checkIn.HabitId,
+    CheckInDate: checkIn.CheckInDate,
+    ActualValue: checkIn.ActualValue,
+    TargetValue: habit.TargetValue,     
+    TargetUnit: habit.TargetUnit,       
+    IsCompleted: checkIn.IsCompleted,
+    MoodId: checkIn.MoodId,
+    MoodName: mood?.Name,
+    MoodEmoji: mood?.Emoji,
+    Note: checkIn.Note));
     }
 
   

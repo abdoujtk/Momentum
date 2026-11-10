@@ -57,6 +57,7 @@ public class CheckInRepository(MomentumDbContext db) : ICheckInRepository
     int habitId, DateOnly from, DateOnly to, CancellationToken ct = default)
     => await _db.CheckIns
         .AsNoTracking()
+        .Include(c => c.Mood)   // ← NEW: load mood navigation
         .Where(c => c.HabitId == habitId && c.CheckInDate >= from && c.CheckInDate <= to)
         .OrderByDescending(c => c.CheckInDate)
         .ToListAsync(ct);
