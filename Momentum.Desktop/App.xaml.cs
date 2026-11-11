@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-using Momentum.Client.Http;
 using Momentum.Desktop.Services;
 using Momentum.Desktop.ViewModels;
 using Momentum.Desktop.ViewModels.Abstractions;
@@ -9,37 +8,27 @@ using Momentum.Desktop.Views;
 using System;
 using System.Net.Http;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+namespace Momentum.Desktop;
 
-namespace Momentum.Desktop
+public partial class App : Application
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
-    public partial class App : Application
-    {
-        public IHost Host { get; }
-        private Window? _window;
+    public IHost Host { get; }
+    private Window? _window;
+    private TrayService? _trayService;
+    private NotificationService? _notificationService;
 
-        public static T GetService<T>() where T : class
+    public static T GetService<T>() where T : class
         => ((App)Current).Host.Services.GetRequiredService<T>();
 
+    public App()
+    {
+        InitializeComponent();
 
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
-        public App()
-        {
-            InitializeComponent();
-
-            Host = Microsoft.Extensions.Hosting.Host
+        Host = Microsoft.Extensions.Hosting.Host
             .CreateDefaultBuilder()
             .ConfigureServices((_, services) =>
             {
-                // ─── HTTP + API Client ───
-                services.AddHttpClient<IHabitApiClient, HabitApiClient>(client =>
+                services.AddHttpClient<IHabitApiClient, Momentum.Client.Http.HabitApiClient>(client =>
                 {
                     client.BaseAddress = new Uri("https://localhost:7098/");
                     client.Timeout = TimeSpan.FromSeconds(30);
@@ -48,39 +37,66 @@ namespace Momentum.Desktop
                 {
                     var handler = new HttpClientHandler();
 #if DEBUG
-                    // ⚠️ DEV ONLY: bypass self-signed cert for localhost
                     handler.ServerCertificateCustomValidationCallback =
                         (msg, _, _, _) => msg.RequestUri?.IsLoopback == true;
 #endif
                     return handler;
                 });
 
-                // ─── Services ───
                 services.AddSingleton<INavigationService, NavigationService>();
+                services.AddSingleton<NotificationService>();
+                services.AddSingleton<TrayService>();
+              
 
-                // ─── ViewModels (Transient) ───
-                services.AddTransient<TodayViewModel>();
                 services.AddTransient<ShellViewModel>();
+                services.AddTransient<TodayViewModel>();
+            
                 services.AddTransient<HabitsViewModel>();
                 services.AddTransient<HabitDetailsViewModel>();
-                // ─── Pages ───
-                services.AddTransient<TodayPage>();
+
                 services.AddTransient<ShellPage>();
+                services.AddTransient<TodayPage>();
+             
                 services.AddTransient<HabitsPage>();
                 services.AddTransient<HabitDetailsPage>();
             })
             .Build();
+    }
 
-        }
+    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    {
+        _window = new MainWindow();
 
-        /// <summary>
-        /// Invoked when the application is launched.
-        /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        // Initialize services
+       
+      //  _notificationService = GetService<NotificationService>();
+      //  _notificationService.Initialize();
+
+        _trayService = GetService<TrayService>();
+        _trayService.Initialize(_window);
+
+
+        _trayService.OpenRequested += (_, _) => _trayService.ShowWindow();
+        _trayService.CheckInRequested += (_, _) =>
         {
-            _window = new MainWindow();
-            _window.Activate();
-        }
+            // 1. Bring window to front
+            _trayService.ShowWindow();
+
+            // 2. Navigate to Today Page
+            var navService = GetService<INavigationService>();
+            navService.NavigateTo<TodayViewModel>();
+        };
+        _trayService.ExitRequested += (_, _) =>
+        {
+            // TrayService already calls _window.Close() internally.
+            // We just need to ensure the application shuts down.
+            _trayService?.Dispose();
+            Application.Current.Exit(); // هذا هو الطريقة الصحيحة في WinUI 3 لإغلاق التطبيق بالكامل
+        };
+
+
+       
+
+        _window.Activate();
     }
 }
