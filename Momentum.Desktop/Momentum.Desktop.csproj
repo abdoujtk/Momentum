@@ -16,8 +16,11 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Dialogs\CheckInForm.xaml" />
+    <None Remove="LoginWindow.xaml" />
     <None Remove="Views\HabitDetailsPage.xaml" />
     <None Remove="Views\HabitsPage.xaml" />
+    <None Remove="Views\LoginPage.xaml" />
+    <None Remove="Views\RegisterPage.xaml" />
     <None Remove="Views\ShellPage.xaml" />
     <None Remove="Views\TodayPage.xaml" />
   </ItemGroup>
@@ -59,6 +62,21 @@
   <ItemGroup>
     <ProjectReference Include="..\Momentum.Client.Http\Momentum.Client.Http.csproj" />
     <ProjectReference Include="..\Momentum.Desktop.ViewModels\Momentum.Desktop.ViewModels.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\RegisterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="LoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Dialogs\CheckInForm.xaml">

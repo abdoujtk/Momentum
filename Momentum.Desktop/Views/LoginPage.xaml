@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Momentum.Desktop.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Momentum.Desktop.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              Width="300">
+            <StackPanel Spacing="16">
+                <TextBlock Text="Welcome Back"
+                           Style="{StaticResource TitleTextBlockStyle}"
+                           HorizontalAlignment="Center" />
+                <TextBox Header="Email"
+                         Text="{x:Bind ViewModel.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <PasswordBox Header="Password"
+                             Password="{x:Bind ViewModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                           Foreground="Red" />
+                <Button Content="Login"
+                        Command="{x:Bind ViewModel.LoginCommand}"
+                        HorizontalAlignment="Stretch"
+                        Style="{StaticResource AccentButtonStyle}" />
+                <HyperlinkButton Content="Create an account"
+                                 Command="{x:Bind ViewModel.GoToRegisterCommand}"
+                                 HorizontalAlignment="Center" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

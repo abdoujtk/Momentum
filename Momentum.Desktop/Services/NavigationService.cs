@@ -50,4 +50,10 @@ public sealed class NavigationService : INavigationService
     }
 
     public bool CanGoBack => _frame?.CanGoBack ?? false;
+
+    public void NavigateToMainApp()
+    {
+        // Tell App.xaml.cs to switch windows
+        App.CurrentApp.ShowMainShell();
+    }
 }

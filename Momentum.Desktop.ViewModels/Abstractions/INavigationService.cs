@@ -13,4 +13,6 @@ public interface INavigationService
 
     
     bool CanGoBack { get; }
+
+    void NavigateToMainApp();
 }
