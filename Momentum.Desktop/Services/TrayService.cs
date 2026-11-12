@@ -16,7 +16,7 @@ public sealed class TrayService : IDisposable
     private Window? _window;
     private bool _isExitRequested;
 
-    private readonly NotificationService _notificationService;
+   
     private readonly DispatcherQueue _dispatcherQueue;
 
     public event EventHandler? OpenRequested;
@@ -24,9 +24,9 @@ public sealed class TrayService : IDisposable
     public event EventHandler? ExitRequested;
 
     // Inject NotificationService directly to avoid App.GetService threading issues
-    public TrayService(NotificationService notificationService)
+    public TrayService()
     {
-        _notificationService = notificationService;
+        
         // Capture the UI thread's dispatcher queue
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
     }

@@ -15,8 +15,7 @@ public partial class App : Application
     public IHost Host { get; }
     private Window? _window;
     private TrayService? _trayService;
-    private NotificationService? _notificationService;
-
+   
     public static T GetService<T>() where T : class
         => ((App)Current).Host.Services.GetRequiredService<T>();
 
@@ -44,7 +43,7 @@ public partial class App : Application
                 });
 
                 services.AddSingleton<INavigationService, NavigationService>();
-                services.AddSingleton<NotificationService>();
+               
                 services.AddSingleton<TrayService>();
               
 
@@ -69,8 +68,8 @@ public partial class App : Application
 
         // Initialize services
        
-      //  _notificationService = GetService<NotificationService>();
-      //  _notificationService.Initialize();
+      
+     
 
         _trayService = GetService<TrayService>();
         _trayService.Initialize(_window);

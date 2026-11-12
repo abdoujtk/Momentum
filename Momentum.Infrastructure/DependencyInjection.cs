@@ -25,6 +25,9 @@ public static class DependencyInjection
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IMoodRepository, MoodRepository>();
         services.AddScoped<IStreakFreezeRepository, StreakFreezeRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddHttpContextAccessor(); // Register HttpContextAccessor
 
 
         return services;

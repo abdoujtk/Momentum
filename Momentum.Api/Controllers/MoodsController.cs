@@ -1,9 +1,11 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Momentum.Application.UseCases.Moods.GetMoods;
 
 namespace Momentum.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class MoodsController(IMediator mediator) : ControllerBase
