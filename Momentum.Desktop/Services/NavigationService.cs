@@ -56,4 +56,21 @@ public sealed class NavigationService : INavigationService
         // Tell App.xaml.cs to switch windows
         App.CurrentApp.ShowMainShell();
     }
+
+    public void NavigateToLogin()
+    {
+        if (App.CurrentApp.LoginWindowInstance?.RootFrameControl != null)
+            App.CurrentApp.LoginWindowInstance.RootFrameControl.Navigate(typeof(LoginPage));
+    }
+
+    public void NavigateToRegister()
+    {
+        if (App.CurrentApp.LoginWindowInstance?.RootFrameControl != null)
+            App.CurrentApp.LoginWindowInstance.RootFrameControl.Navigate(typeof(RegisterPage));
+    }
+
+    public void NavigateToLoginShell()
+    {
+        App.CurrentApp.ShowLoginShell();
+    }
 }

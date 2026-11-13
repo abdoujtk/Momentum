@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Momentum.Desktop.ViewModels.Abstractions;
 using Momentum.Desktop.ViewModels.Models;
 using System.Collections.ObjectModel;
@@ -30,5 +31,15 @@ public sealed partial class ShellViewModel : ObservableObject
         {
             _navigationService.NavigateTo(value.ViewModelType);
         }
+    }
+    private bool _isLoggingOut;
+
+    [RelayCommand]
+    private void Logout()
+    {
+        if (_isLoggingOut) return; 
+        _isLoggingOut = true;
+
+        _navigationService.NavigateToLoginShell();
     }
 }

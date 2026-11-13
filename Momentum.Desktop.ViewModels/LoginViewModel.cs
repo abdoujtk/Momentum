@@ -44,8 +44,7 @@ public sealed partial class LoginViewModel : ObservableObject
             }
 
             // Save token
-            _tokenStore.Token = result.Token;
-            _tokenStore.DisplayName = result.DisplayName;
+            await _tokenStore.SetTokenAsync(result.Token, result.DisplayName);
 
             // Navigate to main app (ShellPage)
             // We need a way to tell App.xaml.cs to switch the main window content
@@ -64,7 +63,6 @@ public sealed partial class LoginViewModel : ObservableObject
     [RelayCommand]
     private void GoToRegister()
     {
-        // Navigate to Register Page
-        _navigation.NavigateTo<RegisterViewModel>();
+        _navigation.NavigateToRegister();
     }
 }

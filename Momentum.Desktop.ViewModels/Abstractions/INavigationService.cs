@@ -15,4 +15,9 @@ public interface INavigationService
     bool CanGoBack { get; }
 
     void NavigateToMainApp();
+
+    void NavigateToLogin();
+    void NavigateToRegister();
+
+    void NavigateToLoginShell();
 }

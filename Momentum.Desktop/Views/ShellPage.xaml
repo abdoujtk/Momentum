@@ -26,6 +26,20 @@
             </DataTemplate>
         </NavigationView.MenuItemTemplate>
 
+        <NavigationView.PaneFooter>
+            <Button Command="{x:Bind ViewModel.LogoutCommand}"
+                    HorizontalAlignment="Stretch"
+                    Margin="4"
+                    ToolTipService.ToolTip="تسجيل الخروج">
+                <StackPanel Orientation="Horizontal"
+                            Spacing="12">
+                    <FontIcon Glyph="&#xE7E8;" />
+                    <!-- Logout Icon -->
+                    <TextBlock Text="تسجيل الخروج" />
+                </StackPanel>
+            </Button>
+        </NavigationView.PaneFooter>
+
         <Frame x:Name="ContentFrame" />
     </NavigationView>
 </Page>

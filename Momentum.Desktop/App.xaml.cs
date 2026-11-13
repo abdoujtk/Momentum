@@ -28,10 +28,14 @@ public partial class App : Application
     public static T GetService<T>() where T : class
         => ((App)Current).Host.Services.GetRequiredService<T>();
 
+    
+    public LoginWindow? LoginWindowInstance => _loginWindow as LoginWindow;
+
+   
     public App()
     {
         InitializeComponent();
-
+        
         Host = Microsoft.Extensions.Hosting.Host
             .CreateDefaultBuilder()
             .ConfigureServices((_, services) =>
@@ -39,8 +43,10 @@ public partial class App : Application
                 // ═══════════════════════════════════════════════════════════
                 // 1. Register TokenStore & AuthHeaderHandler
                 // ═══════════════════════════════════════════════════════════
+                services.AddSingleton<ISecureTokenStorage, SecureTokenStorage>();
                 services.AddSingleton<ITokenStore, TokenStore>();
                 services.AddTransient<AuthHeaderHandler>();
+              
 
                 // ═══════════════════════════════════════════════════════════
                 // 2. Register API Clients
@@ -66,6 +72,8 @@ public partial class App : Application
                 // ═══════════════════════════════════════════════════════════
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddSingleton<TrayService>();
+                
+            
 
                 // ═══════════════════════════════════════════════════════════
                 // 4. ViewModels
@@ -92,11 +100,22 @@ public partial class App : Application
             .Build();
     }
 
-    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
-        // 1. Show Login Window FIRST (instead of MainWindow)
-        _loginWindow = new LoginWindow();
-        _loginWindow.Activate();
+        var tokenStore = GetService<ITokenStore>();
+
+        // Load the saved token
+        await tokenStore.LoadTokenAsync();
+
+        if (!string.IsNullOrEmpty(tokenStore.Token))
+        {
+            ShowMainShell();
+        }
+        else
+        {
+            _loginWindow = new LoginWindow();
+            _loginWindow.Activate();
+        }
     }
 
     /// <summary>
@@ -142,5 +161,45 @@ public partial class App : Application
             (msg, _, _, _) => msg.RequestUri?.IsLoopback == true;
 #endif
         return handler;
+    }
+
+    public void ShowLoginShell()
+    {
+        try
+        {
+        
+            var tokenStore = GetService<ITokenStore>();
+            tokenStore.Clear();
+
+            _trayService?.Dispose();
+            _trayService = null;
+
+         
+            var dispatcher = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
+            dispatcher.TryEnqueue(() =>
+            {
+                try
+                {
+                   
+                    _loginWindow = new LoginWindow();
+                    _loginWindow.Activate();
+
+                    
+                    if (_window != null)
+                    {
+                        _window.Close();
+                        _window = null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error during window switch: {ex.Message}");
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error in ShowLoginShell: {ex.Message}");
+        }
     }
 }
