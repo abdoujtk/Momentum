@@ -34,7 +34,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Result<Au
         {
             DisplayName = request.DisplayName,
             Email = request.Email,
-            PasswordHash = passwordHash,
+            PasswordHash = passwordHash, 
             TimeZoneId = request.TimeZoneId,
             PreferredLanguage = "ar",
             CreatedAt = DateTime.UtcNow,
