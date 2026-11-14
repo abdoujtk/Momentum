@@ -11,5 +11,6 @@
     </Project>
     <Project Path="Momentum.Domain/Momentum.Domain.csproj" />
     <Project Path="Momentum.Infrastructure/Momentum.Infrastructure.csproj" />
+    <Project Path="Momentum.Mobile/Momentum.Mobile.csproj" Id="f30fdf5c-3bdd-4f6c-8132-dfab5ebfe302" />
   </Folder>
 </Solution>

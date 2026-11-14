@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Momentum.Desktop.Services;
+namespace Momentum.Client.Http;
 
 public class AuthHeaderHandler(ITokenStore tokenStore) : DelegatingHandler
 {

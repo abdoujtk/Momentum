@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+using Momentum.Client.Http;
 using Momentum.Desktop.Services;
 using Momentum.Desktop.ViewModels;
 using Momentum.Desktop.ViewModels.Abstractions;
