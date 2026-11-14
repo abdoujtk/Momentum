@@ -22,7 +22,7 @@ public partial class User
     public bool IsActive { get; set; }
 
     public string PasswordHash { get; set; } = null!;
-    public string? PasswordSalt { get; set; }
+  
 
     public virtual ICollection<Habit> Habits { get; set; } = new List<Habit>();
 }

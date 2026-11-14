@@ -17,7 +17,8 @@ public sealed class NavigationService : INavigationService
     {
         { typeof(TodayViewModel), typeof(TodayPage) },
         { typeof(HabitsViewModel), typeof(HabitsPage) },
-         { typeof(HabitDetailsViewModel), typeof(HabitDetailsPage) }
+         { typeof(HabitDetailsViewModel), typeof(HabitDetailsPage) },
+        { typeof(StatsViewModel), typeof(StatsPage) }
 
     };
 

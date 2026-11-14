@@ -17,6 +17,7 @@
             <helpers:BoolToCheckmarkConverter x:Key="BoolToCheckmarkConverter" />
             <helpers:BoolToColorConverter x:Key="BoolToColorConverter" />
             <helpers:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+            <helpers:LevelToBrushConverter x:Key="LevelToBrushConverter" />
 
         </ResourceDictionary>
     </Application.Resources>

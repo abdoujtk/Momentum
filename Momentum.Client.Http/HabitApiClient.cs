@@ -28,15 +28,9 @@ public sealed class HabitApiClient(HttpClient http) : IHabitApiClient
         return response.IsSuccessStatusCode;
     }
 
-    public Task<HeatmapDto?> GetHeatmapAsync(int days = 90, CancellationToken ct = default)
-    {
-        throw new NotImplementedException();
-    }
+   
 
-    public Task<IReadOnlyList<HabitStreakDto>> GetStreaksAsync(CancellationToken ct = default)
-    {
-        throw new NotImplementedException();
-    }
+
 
     public async Task<IReadOnlyList<HabitDto>> GetAllHabitsAsync(CancellationToken ct = default)
     {
@@ -92,5 +86,23 @@ public sealed class HabitApiClient(HttpClient http) : IHabitApiClient
         return await response.Content.ReadFromJsonAsync<List<MoodDto>>(
             cancellationToken: ct) ?? new();
     }
+
+    public async Task<HeatmapDto?> GetHeatmapAsync(int days = 90, CancellationToken ct = default)
+    {
+        var response = await _http.GetAsync($"api/habits/heatmap?days={days}", ct);
+        if (!response.IsSuccessStatusCode) return null;
+        return await response.Content.ReadFromJsonAsync<HeatmapDto>(cancellationToken: ct);
+    }
+
+    public async Task<IReadOnlyList<HabitStreakDto>> GetStreaksAsync(CancellationToken ct = default)
+    {
+        var response = await _http.GetAsync("api/habits/streaks", ct);
+        response.EnsureSuccessStatusCode();
+
+        var streaks = await response.Content.ReadFromJsonAsync<List<HabitStreakDto>>(cancellationToken: ct);
+        return streaks ?? new List<HabitStreakDto>();
+    }
+
+
 
 }

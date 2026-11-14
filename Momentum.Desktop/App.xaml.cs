@@ -80,7 +80,7 @@ public partial class App : Application
                 // ═══════════════════════════════════════════════════════════
                 services.AddTransient<LoginViewModel>();
                 services.AddTransient<RegisterViewModel>();
-
+                services.AddTransient<StatsViewModel>();
                 services.AddTransient<ShellViewModel>();
                 services.AddTransient<TodayViewModel>();
                 services.AddTransient<HabitsViewModel>();
@@ -91,7 +91,7 @@ public partial class App : Application
                 // ═══════════════════════════════════════════════════════════
                 services.AddTransient<LoginPage>();
                 services.AddTransient<RegisterPage>();
-
+                services.AddTransient<StatsPage>();
                 services.AddTransient<ShellPage>();
                 services.AddTransient<TodayPage>();
                 services.AddTransient<HabitsPage>();

@@ -22,6 +22,7 @@ public sealed partial class ShellViewModel : ObservableObject
         
         NavigationItems.Add(new NavigationItem("اليوم", typeof(TodayViewModel), "\uE787"));
         NavigationItems.Add(new NavigationItem("العادات", typeof(HabitsViewModel), "\uE8FD"));
+        NavigationItems.Add(new NavigationItem("الإحصائيات", typeof(StatsViewModel), "\uE9D9"));
 
     }
 

@@ -20,7 +20,17 @@ public class AuthService : IAuthService
     public async Task<AuthResponse?> RegisterAsync(RegisterRequest request, CancellationToken ct = default)
     {
         var response = await _http.PostAsJsonAsync("api/auth/register", request, ct);
-        if (!response.IsSuccessStatusCode) return null;
+
+        if (!response.IsSuccessStatusCode)
+        {
+            // هذا السطر سيطبع سبب الفشل الحقيقي في نافذة Output
+            var errorJson = await response.Content.ReadAsStringAsync(ct);
+            System.Diagnostics.Debug.WriteLine($"========== REGISTER API ERROR ==========");
+            System.Diagnostics.Debug.WriteLine(errorJson);
+            System.Diagnostics.Debug.WriteLine($"========================================");
+            return null;
+        }
+
         return await response.Content.ReadFromJsonAsync<AuthResponse>(cancellationToken: ct);
     }
 }
