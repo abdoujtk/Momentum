@@ -1,6 +1,6 @@
 ﻿using Momentum.Desktop.ViewModels.Abstractions;
 
-namespace Momentum.Mobile;
+namespace Momentum.Mobile.Service;
 
 public class MauiTokenStore : ITokenStore
 {

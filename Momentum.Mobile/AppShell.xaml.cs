@@ -1,10 +1,14 @@
-﻿namespace Momentum.Mobile
+﻿using Momentum.Mobile.Views;
+
+namespace Momentum.Mobile;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+
+        
+        Routing.RegisterRoute(nameof(TodayPage), typeof(TodayPage));
     }
 }

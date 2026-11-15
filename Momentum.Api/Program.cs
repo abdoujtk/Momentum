@@ -6,6 +6,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseUrls("http://0.0.0.0:5071");
 // Add services to the container.
 builder.Services.AddAppDI(builder.Configuration);
 
@@ -64,13 +65,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
-app.UseHttpsRedirection();
+
+//app.UseHttpsRedirection();
 
 // ═══════════════════════════════════════════════════════════
 // 1. Authentication MUST be first (identifies the user from the token)

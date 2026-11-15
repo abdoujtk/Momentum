@@ -1,17 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Momentum.Mobile.Views;
 
-namespace Momentum.Mobile
+namespace Momentum.Mobile;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    public App(IServiceProvider serviceProvider)
     {
-        public App()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
-        }
+        // Set the initial page
+        MainPage = serviceProvider.GetRequiredService<AppShell>();
     }
 }

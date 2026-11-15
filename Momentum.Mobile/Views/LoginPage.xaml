@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Momentum.Mobile.Views.LoginPage"
+             Title="Login">
+
+    <VerticalStackLayout Spacing="20"
+                         Padding="30"
+                         VerticalOptions="Center">
+
+        <Label Text="Momentum"
+               FontSize="36"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="{StaticResource Primary}" />
+        <Label Text="Welcome Back"
+               FontSize="24"
+               HorizontalOptions="Center"
+               Margin="0,0,0,20" />
+
+        <Entry Placeholder="Email"
+               Text="{Binding Email, Mode=TwoWay}"
+               Keyboard="Email" />
+
+        <Entry Placeholder="Password"
+               Text="{Binding Password, Mode=TwoWay}"
+               IsPassword="True" />
+
+        <Label Text="{Binding ErrorMessage}"
+               TextColor="Red"
+               HorizontalOptions="Center"
+               IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmpty}}" />
+
+        <Button Text="Login"
+                Command="{Binding LoginCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                Margin="0,10,0,0" />
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center" />
+
+        <Button Text="Create an account"
+                Command="{Binding GoToRegisterCommand}"
+                BackgroundColor="Transparent"
+                TextColor="{StaticResource Primary}" />
+
+    </VerticalStackLayout>
+</ContentPage>

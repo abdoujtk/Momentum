@@ -2,6 +2,7 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Momentum.Mobile"
+             xmlns:Conv ="clr-namespace:Momentum.Mobile.Converters"
              x:Class="Momentum.Mobile.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -9,6 +10,7 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Conv:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmpty" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

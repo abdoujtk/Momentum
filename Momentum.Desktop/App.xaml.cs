@@ -55,14 +55,14 @@ public partial class App : Application
                 // Auth Service (No handler needed, it's for logging in)
                 services.AddHttpClient<IAuthService, Momentum.Client.Http.AuthService>(client =>
                 {
-                    client.BaseAddress = new Uri("https://localhost:7098/");
+                    client.BaseAddress = new Uri("http://localhost:5071/");
                 })
                 .ConfigurePrimaryHttpMessageHandler(() => GetDebugHttpClientHandler());
 
                 // Habit API Client (With AuthHeaderHandler to attach JWT)
                 services.AddHttpClient<IHabitApiClient, Momentum.Client.Http.HabitApiClient>(client =>
                 {
-                    client.BaseAddress = new Uri("https://localhost:7098/");
+                    client.BaseAddress = new Uri("http://localhost:5071/");
                     client.Timeout = TimeSpan.FromSeconds(30);
                 })
                 .AddHttpMessageHandler<AuthHeaderHandler>() // <-- Important
