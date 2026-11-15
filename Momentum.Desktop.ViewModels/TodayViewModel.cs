@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Momentum.Contracts.DTOs;
 using Momentum.Desktop.ViewModels.Abstractions;
 using System.Collections.ObjectModel;
@@ -94,4 +95,20 @@ public sealed partial class TodayViewModel : ObservableObject
     public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
 
     partial void OnErrorMessageChanged(string? value) => OnPropertyChanged(nameof(HasError));
+
+    [RelayCommand]
+    private async Task QuickCheckInAsync(HabitDto? habit)
+    {
+        if (habit is null || habit.IsCompletedToday) return;
+
+        var request = new CheckInRequest(habit.TargetValue, true, null, null);
+        await CheckInAsync(habit, request);
+    }
+
+    [RelayCommand]
+    private async Task RefreshAsync()
+    {
+        _loaded = false;
+        await LoadAsync();
+    }
 }
