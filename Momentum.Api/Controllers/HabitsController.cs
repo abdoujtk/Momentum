@@ -178,5 +178,11 @@ public class HabitsController(IMediator mediator) : ControllerBase
         return result.IsFailure ? BadRequest(result.Error) : Ok(result.Value);
     }
 
+    [HttpGet("throw-error")]
+    public IActionResult ThrowError()
+    {
+        throw new Exception("This is a secret database connection string: Server=myServer;");
+    }
+
 
 }

@@ -62,12 +62,29 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
+// 1. Global Exception Handler (Must be at the very top)
+app.UseMiddleware<Momentum.Api.Middlewares.ExceptionHandlingMiddleware>();
+// 2. CORS (Must be before Routing and Auth)
+app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.
 
+
     app.UseSwagger();
     app.UseSwaggerUI();
+
 
 
 //app.UseHttpsRedirection();
