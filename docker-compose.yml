@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  momentum-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong!Password123
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    networks:
+      - momentum-network
+
+  momentum-api:
+    build:
+      context: .
+      dockerfile: Momentum.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__MomentumDb=Server=momentum-db;Database=MomentumDB;User Id=sa;Password=YourStrong!Password123;TrustServerCertificate=True;
+      - Jwt__Secret=SuperSecretKeyThatIsAtLeast32CharactersLong!Momentum
+      - Jwt__Issuer=MomentumApi
+      - Jwt__Audience=MomentumClient
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "5071:8080"
+    depends_on:
+      - momentum-db
+    networks:
+      - momentum-network
+
+volumes:
+  sql_data:
+
+networks:
+  momentum-network:
+    driver: bridge

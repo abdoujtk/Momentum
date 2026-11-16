@@ -11,6 +11,11 @@
     </Project>
     <Project Path="Momentum.Domain/Momentum.Domain.csproj" />
     <Project Path="Momentum.Infrastructure/Momentum.Infrastructure.csproj" />
-    <Project Path="Momentum.Mobile/Momentum.Mobile.csproj" Id="f30fdf5c-3bdd-4f6c-8132-dfab5ebfe302" />
+    <Project Path="Momentum.Mobile/Momentum.Mobile.csproj" Id="f30fdf5c-3bdd-4f6c-8132-dfab5ebfe302">
+      <Deploy Solution="Debug|*" />
+    </Project>
+  </Folder>
+  <Folder Name="/Test/">
+    <Project Path="Momentum.Application.Tests/Momentum.Application.Tests.csproj" Id="b4fecedf-5fff-4f61-9164-d157f1d0d195" />
   </Folder>
 </Solution>
