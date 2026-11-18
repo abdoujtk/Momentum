@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Momentum.Domain.Entities;
 
 namespace Momentum.Infrastructure.Persistence;
@@ -13,17 +11,11 @@ public partial class MomentumDbContext : DbContext
     }
 
     public virtual DbSet<Category> Categories { get; set; }
-
     public virtual DbSet<CheckIn> CheckIns { get; set; }
-
     public virtual DbSet<Habit> Habits { get; set; }
-
     public virtual DbSet<Mood> Moods { get; set; }
-
     public virtual DbSet<Quote> Quotes { get; set; }
-
     public virtual DbSet<StreakFreeze> StreakFreezes { get; set; }
-
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,32 +23,24 @@ public partial class MomentumDbContext : DbContext
         modelBuilder.Entity<Category>(entity =>
         {
             entity.HasIndex(e => e.Name, "UQ_Categories_Name").IsUnique();
-
-            entity.Property(e => e.ColorHex)
-                .HasMaxLength(7)
-                .HasDefaultValue("#4CAF50");
-            entity.Property(e => e.IconName)
-                .HasMaxLength(50)
-                .HasDefaultValue("circle");
+            entity.Property(e => e.ColorHex).HasMaxLength(7).HasDefaultValue("#4CAF50");
+            entity.Property(e => e.IconName).HasMaxLength(50).HasDefaultValue("circle");
             entity.Property(e => e.Name).HasMaxLength(50);
         });
 
         modelBuilder.Entity<CheckIn>(entity =>
         {
             entity.HasIndex(e => e.CheckInDate, "IX_CheckIns_CheckInDate");
-
             entity.HasIndex(e => e.HabitId, "IX_CheckIns_HabitId");
-
-            
-
             entity.HasIndex(e => e.MoodId, "IX_CheckIns_MoodId");
-
             entity.HasIndex(e => new { e.HabitId, e.CheckInDate }, "UQ_CheckIns_Habit_Date").IsUnique();
-
             entity.Property(e => e.ActualValue).HasColumnType("decimal(10, 2)");
+
+            // PostgreSQL syntax
             entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp with time zone");
+
             entity.Property(e => e.Note).HasMaxLength(500);
 
             entity.HasOne(d => d.Habit).WithMany(p => p.CheckIns)
@@ -72,26 +56,31 @@ public partial class MomentumDbContext : DbContext
         modelBuilder.Entity<Habit>(entity =>
         {
             entity.HasIndex(e => e.CategoryId, "IX_Habits_CategoryId");
-
             entity.HasIndex(e => e.IsArchived, "IX_Habits_IsArchived");
-
             entity.HasIndex(e => e.UserId, "IX_Habits_UserId");
-
             entity.Property(e => e.ColorHex).HasMaxLength(7);
+
+            // PostgreSQL syntax
             entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp with time zone");
+
             entity.Property(e => e.DaysOfWeek).HasMaxLength(20);
             entity.Property(e => e.Description).HasMaxLength(500);
             entity.Property(e => e.FrequencyType).HasMaxLength(20);
             entity.Property(e => e.IconName).HasMaxLength(50);
-            entity.Property(e => e.StartDate).HasDefaultValueSql("(CONVERT([date],getdate()))");
+
+            // PostgreSQL syntax for default date
+            entity.Property(e => e.StartDate).HasDefaultValueSql("CURRENT_DATE");
+
             entity.Property(e => e.TargetUnit).HasMaxLength(20);
             entity.Property(e => e.TargetValue).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Title).HasMaxLength(150);
+
+            // PostgreSQL syntax
             entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp with time zone");
 
             entity.HasOne(d => d.Category).WithMany(p => p.Habits)
                 .HasForeignKey(d => d.CategoryId)
@@ -106,10 +95,7 @@ public partial class MomentumDbContext : DbContext
         modelBuilder.Entity<Mood>(entity =>
         {
             entity.HasIndex(e => e.Name, "UQ_Moods_Name").IsUnique();
-
-            entity.Property(e => e.ColorHex)
-                .HasMaxLength(7)
-                .HasDefaultValue("#9E9E9E");
+            entity.Property(e => e.ColorHex).HasMaxLength(7).HasDefaultValue("#9E9E9E");
             entity.Property(e => e.Emoji).HasMaxLength(10);
             entity.Property(e => e.Name).HasMaxLength(50);
         });
@@ -124,14 +110,14 @@ public partial class MomentumDbContext : DbContext
         modelBuilder.Entity<StreakFreeze>(entity =>
         {
             entity.HasKey(e => e.FreezeId);
-
             entity.HasIndex(e => e.HabitId, "IX_StreakFreezes_HabitId");
-
             entity.HasIndex(e => new { e.HabitId, e.FreezeDate }, "UQ_StreakFreezes_Habit_Date").IsUnique();
 
+            // PostgreSQL syntax
             entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp with time zone");
+
             entity.Property(e => e.Reason).HasMaxLength(200);
 
             entity.HasOne(d => d.Habit).WithMany(p => p.StreakFreezes)
@@ -143,19 +129,20 @@ public partial class MomentumDbContext : DbContext
         {
             entity.HasIndex(e => e.Email, "UQ_Users_Email").IsUnique();
 
+            // PostgreSQL syntax
             entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp with time zone");
+
             entity.Property(e => e.DisplayName).HasMaxLength(100);
             entity.Property(e => e.Email).HasMaxLength(150);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.LastLoginAt).HasColumnType("datetime");
-            entity.Property(e => e.PreferredLanguage)
-                .HasMaxLength(10)
-                .HasDefaultValue("ar");
-            entity.Property(e => e.TimeZoneId)
-                .HasMaxLength(100)
-                .HasDefaultValue("Asia/Amman");
+
+            // PostgreSQL syntax
+            entity.Property(e => e.LastLoginAt).HasColumnType("timestamp with time zone");
+
+            entity.Property(e => e.PreferredLanguage).HasMaxLength(10).HasDefaultValue("ar");
+            entity.Property(e => e.TimeZoneId).HasMaxLength(100).HasDefaultValue("Asia/Amman");
         });
 
         OnModelCreatingPartial(modelBuilder);

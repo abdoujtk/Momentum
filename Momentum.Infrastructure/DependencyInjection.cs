@@ -15,7 +15,7 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddDbContext<MomentumDbContext>(options =>
-            options.UseSqlServer(
+            options.UseNpgsql(
                 configuration.GetConnectionString("MomentumDb")));
 
         services.AddScoped<IHabitRepository, HabitRepository>();
